@@ -7,6 +7,8 @@ import {Provider as PaperProvider} from "react-native-paper";
 import {useRecoilState} from "recoil";
 import {IsAuth} from "./src/atoms";
 import {isAuthenticated} from "./src/core/auth";
+import {Appearance} from "react-native";
+import { StatusBar } from 'expo-status-bar';
 
 export default function Base(){
 
@@ -21,6 +23,7 @@ export default function Base(){
 
     return(
         <PaperProvider theme={theme}>
+            {Appearance.getColorScheme()==="dark"?<StatusBar style="light"  />:<StatusBar style="dark"  />}
             <NavigationContainer>
                 {
                     isAuth?<BaseApp/>:<Routes/>

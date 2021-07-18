@@ -1,12 +1,13 @@
 import React, {memo, useEffect, useState} from "react";
 import TopBar from "../../../components/TopBar";
-import {Dimensions, FlatList, View} from "react-native";
-import Publication from "../../../components/Publication";
+import {Appearance, Dimensions, FlatList, Text, View} from "react-native";
+import Publication, {EmptyComponent, emptyComponent} from "../../../components/ListPublication/List";
 import {styles} from "./style"
 import {createStackNavigator} from "@react-navigation/stack";
 import {useRecoilState} from "recoil";
 import {ShowBar} from "../../../atoms";
 import api, {tokenAuth} from "../../../core/api";
+import {ActivityIndicator} from "react-native";
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
 function HomeScreen({navigation}){
@@ -31,18 +32,19 @@ function HomeScreen({navigation}){
 
     function loadData(type="next"){
         if(type === "load"){
-            setRefresh(true)
-            api.get('publication/feed').then((res)=>{
+            //setRefresh(true)
+            api.get('publication/feed?page=1').then((res)=>{
                 setData(res.data.data)
                 setAllData(res.data)
                 setRefresh(false)
             })
         }else{
+            console.error(allData.current_page)
             if(allData.next_page_url!==null){
                 setRefresh(true)
                 let tmpData = data
-                api.get('publication/feed?page='+allData.current_page+1).then(res=>{
-                    tmpData.push(res.data.data.data)
+                api.get('publication/feed?page='+(parseInt(allData.current_page)+1)).then(res=>{
+                    tmpData.concat(res.data.data)
                     setData(tmpData)
                     setAllData(res.data)
                     setRefresh(false)
@@ -50,9 +52,6 @@ function HomeScreen({navigation}){
             }
         }
     }
-
-
-
 
 
     return(
@@ -75,7 +74,7 @@ function HomeScreen({navigation}){
                         }
                         setScrollOldValue(currentOffset)
                     }}
-                    style={{marginTop: 5, paddingTop: 50}}
+                    style={{marginTop: 5, paddingTop: 50, marginBottom: 0}}
                     data={data}
                     renderItem={props=><Publication{...props} token={token}  navigation={navigation} focus={focusedIndex} />}
                     keyExtractor={(row)=>row.id.toString()}
@@ -83,11 +82,22 @@ function HomeScreen({navigation}){
                     refreshing={refresh}
                     tintColor="red"
                     scrollEventThrottle={100}
-
+                    renderToHardwareTextureAndroid={true}
                     onEndReachedThreshold={0.01}
                     onEndReached={() => {
                         loadData()
                     }}
+                    ListEmptyComponent={<ActivityIndicator renderToHardwareTextureAndroid={false} size={"large"} color={Appearance.getColorScheme()==="dark"?"white":"gray"}/>}
+                    ListFooterComponent={<EmptyComponent refresh={refresh}/>}
+                    removeClippedSubviews={true} // Unmount components when outside of window
+                    initialNumToRender={3} // Reduce initial render amount
+                    maxToRenderPerBatch={5} // Reduce number in each render batch
+                    updateCellsBatchingPeriod={100} // Increase time between renders
+                    windowSize={7}
+
+
+
+
                 />
             </View>
         </>
@@ -96,4 +106,4 @@ function HomeScreen({navigation}){
 
 
 
-export default memo(HomeScreen)
+export default (HomeScreen)

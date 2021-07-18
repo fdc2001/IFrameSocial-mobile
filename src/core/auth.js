@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage, {useAsyncStorage} from "@react-native-async-storage/async-storage";
 import {Alert} from "react-native";
 
 export async function createSession(token, device, username){
@@ -72,4 +72,8 @@ export function isAuthenticated(){
     return getSession().then(session=>{
         return session.token!=="" && session.device!=="" && session.username!=="" && session.token!==null && session.device!==null && session.username!==null
     })
+}
+
+export async function logout() {
+    console.log(await AsyncStorage.clear())
 }

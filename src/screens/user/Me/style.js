@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     container:{
         alignItems:"center",
         backgroundColor: theme.colors.background,
-        height: '100%'
+        //height: '100%'
     },
     containerMaster:{
         backgroundColor: theme.colors.background,
@@ -36,5 +36,13 @@ export const styles = StyleSheet.create({
         margin: 5,
         //backgroundColor: theme.colors.placeholder,
         width: DEVICE_WIDTH-50
+    },
+    pubContainer:{
+        flex: 1,
+        alignItems: 'flex-start',
+        justifyContent: "space-around",
+        alignContent: 'space-between',
+        flexWrap: "wrap",
+
     }
 });
