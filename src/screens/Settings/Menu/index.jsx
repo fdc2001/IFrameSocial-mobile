@@ -24,8 +24,10 @@ function Menu({navigation}) {
                     style: "cancel"
                 },
                 { text: "Yes", style:"destructive", onPress: async () => {
-                        await logout()
-                        setIsAuth(false)
+                         logout().then(()=>{
+                             setIsAuth(false)
+                             navigation.navigate("HomeScreen")
+                         })
                 }}
             ]
         );

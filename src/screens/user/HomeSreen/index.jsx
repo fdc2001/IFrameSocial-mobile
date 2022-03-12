@@ -3,7 +3,6 @@ import TopBar from "../../../components/TopBar";
 import {Appearance, Dimensions, FlatList, Text, View} from "react-native";
 import Publication, {EmptyComponent, emptyComponent} from "../../../components/ListPublication/List";
 import {styles} from "./style"
-import {createStackNavigator} from "@react-navigation/stack";
 import {useRecoilState} from "recoil";
 import {ShowBar} from "../../../atoms";
 import api, {tokenAuth} from "../../../core/api";
@@ -31,6 +30,7 @@ function HomeScreen({navigation}){
     },[])
 
     function loadData(type="next"){
+
         if(type === "load"){
             //setRefresh(true)
             api.get('publication/feed?page=1').then((res)=>{

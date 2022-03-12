@@ -1,16 +1,21 @@
 import React, {memo, useEffect, useState} from "react";
-import {FlatList, Modal, RefreshControl, ScrollView, Text, View} from "react-native";
+import {FlatList, Modal, RefreshControl, ScrollView, Text, View, SafeAreaView, Dimensions} from "react-native";
 import {styles} from "./style";
 import TopBar from "../../../components/TopBar";
 import api, {baseURL, tokenAuth} from "../../../core/api";
-import { Button, Divider} from "react-native-paper";
+import {Button, Divider, Title} from "react-native-paper";
 import { Avatar } from 'react-native-elements';
 
 import {theme} from "../../../core/theme";
 import ListPublication from "../../../components/ListPublication/Gallery";
+import { Backpack } from 'react-kawaii/lib/native/'
+import HorizontalFeed from "../../../components/Pets/HorizontalFeed";
+import {EmptyComponent} from "../../../components/ListPublication/List";
+import Final from "../../../components/Pets/Final";
+const DEVICE_WIDTH = Dimensions.get('window').width;
 
 function Me(props){
-    const [userData, setUserData]=useState({username:"IFRAME", verified:1});
+    const [userData, setUserData]=useState({username:"IFRAME", verified:1, pets:[]});
     const [refresh, setRefresh] = useState(true)
     const [publications, setPublications] = useState([])
     const [allData, setAllData] = useState({})
@@ -94,6 +99,27 @@ function Me(props){
                     <View style={styles.divider}/>
                 </View>
                 <View style={styles.pubContainer}>
+                    <View style={{flex:1, alignContent:'flex-start', width:DEVICE_WIDTH, marginBottom:20}}>
+                        <View style={{...styles.row, justifyContent:'center'}}>
+                            <Title>Pets</Title>
+                        </View>
+                        <View style={styles.divider}/>
+                        <FlatList
+                            data={userData.pets}
+                            renderItem={({item})=>(
+                                <HorizontalFeed
+                                    data={item}
+                                    token={token}
+                                />
+                            )}
+                            horizontal={true}
+                            keyExtractor={item => item.id}
+                            onEndReached={()=>getPublications("load")}
+                            onEndReachedThreshold={0.5}
+                            ListFooterComponent={<Final/>}
+                        />
+                    </View>
+                    <View style={styles.divider}/>
                     <FlatList numColumns={3} data={publications} renderItem={props=><ListPublication {...props} token={token}  />} />
                 </View>
                 <View style={{height: 150}}/>

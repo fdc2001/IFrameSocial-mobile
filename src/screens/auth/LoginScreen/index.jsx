@@ -34,8 +34,10 @@ const LoginScreen = ({ navigation })=> {
                     if(res.data.code!=0){
                         Alert.alert("Error",res.data.error)
                     }else{
+
                         createSession(res.data.data.sessionToken, res.data.data.deviceID, res.data.data.username).then(status=>{
                             if(status){
+
                                 setIsAuth(true)
                             }
                         })

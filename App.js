@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import 'react-native-gesture-handler';
-import {RecoilRoot, useRecoilState} from "recoil";
+import {RecoilRoot} from "recoil";
 import Base from "./Base";
 
 export default function App() {

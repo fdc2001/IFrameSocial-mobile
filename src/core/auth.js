@@ -2,9 +2,6 @@ import AsyncStorage, {useAsyncStorage} from "@react-native-async-storage/async-s
 import {Alert} from "react-native";
 
 export async function createSession(token, device, username){
-    console.error(token)
-    console.error(device)
-    console.error(username)
     try {
         await AsyncStorage.setItem('@iframe_token', token)
         await AsyncStorage.setItem('@iframe_device', device)
@@ -75,5 +72,5 @@ export function isAuthenticated(){
 }
 
 export async function logout() {
-    console.log(await AsyncStorage.clear())
+    await AsyncStorage.clear()
 }

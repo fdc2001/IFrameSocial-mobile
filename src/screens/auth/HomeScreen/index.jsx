@@ -1,11 +1,9 @@
 import React, { memo } from 'react';
 import Background from '../../../components/Background';
 import Logo from '../../../components/Logo';
-import Header from '../../../components/Header';
 import Button from '../../../components/Button';
 import {Text} from "react-native";
 import {theme} from "../../../core/theme";
-//import Paragraph from '../../../components/Paragraph';
 
 
 const HomeScreen = ({ navigation }) => (

@@ -16,11 +16,14 @@ import {theme} from "../../../../core/theme";
 import DatePicker from "../../../../components/DatePicker"
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
+import {useRecoilState} from "recoil";
+import {IsAuth} from "../../../../atoms";
 
 const RegisterScreenStep4 = ({ route, navigation })=> {
         const { message } = route.params;
         const [code, setCode] = useState({ value: '', error: '' });
         const [status, setStatus] = useState("");
+        const [isAuth, setIsAuth]=useRecoilState(IsAuth)
 
         function handleResend(){
 
@@ -47,9 +50,9 @@ const RegisterScreenStep4 = ({ route, navigation })=> {
                     if(res.data.code!==0){
                         setCode({...code, error:res.data.error})
                     }else{
-                        createSession(res.data.data.sessionToken, res.data.data.deviceID, res.data.data.username).then(r =>
-                            alert('login')
-                        )
+                        createSession(res.data.data.sessionToken, res.data.data.deviceID, res.data.data.username).then(r => {
+                            setIsAuth(true)
+                        })
                     }
                 })
             }

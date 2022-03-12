@@ -1,4 +1,4 @@
-import {Text} from "react-native";
+import {Text, View} from "react-native";
 import React, {memo} from "react";
 import { ActivityIndicator } from 'react-native';
 import { Image } from 'react-native-elements';
@@ -13,11 +13,11 @@ function Gallery (props){
 
 
     return (
-        <Card style={index!==0?styles.card:[styles.card]}>
+        <View style={index!==0?styles.card:[styles.card]}>
             {data.type==="IMAGE" || data.type==="VIDEO"?(
                 <Image style={styles.imageBG} source={{ uri: baseURL+"publication/media/thumbnail/"+data.id+"/"+token}}/>
-            ):<Title>{data.content}</Title>}
-        </Card>
+            ):<Title>{/*data.content*/}</Title>}
+        </View>
     )
 }
 
