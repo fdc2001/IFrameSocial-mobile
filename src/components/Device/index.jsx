@@ -20,7 +20,6 @@ function disableAccess(item, setRefresh){
             },
             { text: "Yes", style:"destructive", onPress: async (val) => {
                     await api.put('security/devices/'+item.id, {password: val}).then((res)=>{
-                        console.log(res.data)
                         if(res.data.code!==0){
                             if(res.data.error.password!==undefined){
                                 Alert.alert("Error", res.data.error.password.join(", "), [{
@@ -34,7 +33,6 @@ function disableAccess(item, setRefresh){
                                 }])
                             }
                         }else{
-                            console.log(res.data.data.join(", "))
                             Alert.alert('Information', res.data.data.join(", "), [{
                                 text: "OK",
                                 style: "cancel",

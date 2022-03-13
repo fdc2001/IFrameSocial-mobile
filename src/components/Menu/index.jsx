@@ -17,6 +17,7 @@ export default function Menu(){
     return(
         <ActionSheetProvider>
             <Tab.Navigator
+                animationEnabled={true}
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName="heart";
@@ -73,9 +74,11 @@ export default function Menu(){
                 <Tab.Screen name="Activity" component={HomeScreen} />
                 <Tab.Screen name="Me" component={Profile} />
                 <Tab.Screen
+
                     name="Other"
                     component={PrivateRoutes}
                     options={{
+                        unmountOnBlur:true,
                         tabBarVisible:true,
                         tabBarButton: () => null,
                         tabBarButtonComponent: () => null,

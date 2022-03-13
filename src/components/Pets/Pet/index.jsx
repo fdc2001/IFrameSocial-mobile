@@ -21,7 +21,7 @@ const Pet = ({pet="Cat", size = 200, mood="blissful", color="#E0E4E8"}) => {
       case "iceCream":
         return <IceCream size={size} mood={mood} color={color}/>
       case "mug":
-        return <Mug size={size} mood={mood} color={color}/>
+        return <Mug size={(size-25)} mood={mood} color={color}/>
       case "planet":
         return <Planet size={size} mood={mood} color={color}/>
       case "speechBubble":

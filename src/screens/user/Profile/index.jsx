@@ -18,9 +18,8 @@ function Profile(props){
         if(refresh===true){
             api.get('account/profile/'+props.route.params.username).then(res=>{
                 setUserData(res.data.data)
-                console.log(res.data.data)
                 setRefresh(false)
-            }).catch(console.log)
+            })
         }
 
     }, [refresh])

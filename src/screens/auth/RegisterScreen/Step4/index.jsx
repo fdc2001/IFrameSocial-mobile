@@ -28,10 +28,7 @@ const RegisterScreenStep4 = ({ route, navigation })=> {
         function handleResend(){
 
             getEmail().then(store=>{
-                                    console.log(store.email)
-
                 api.post('account/validateNewCode', {email:store.email}).then(res=>{
-                    console.log(res.data)
                     setStatus(res.data.data)
                 })
             })

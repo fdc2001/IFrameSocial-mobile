@@ -162,4 +162,4 @@ export function EmptyComponent({refresh}){
 }
 
 //export default Publication
-export default (List)
+export default memo(List)

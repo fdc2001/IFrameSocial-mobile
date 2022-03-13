@@ -20,7 +20,7 @@ function Menu({navigation}) {
             [
                 {
                     text: "Cancel",
-                    onPress: () => console.log("Cancel Pressed"),
+                    //onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                 },
                 { text: "Yes", style:"destructive", onPress: async () => {
@@ -35,7 +35,7 @@ function Menu({navigation}) {
 
     return (
         <View style={styles.container}>
-            <TopBar title={"Settings"} back={true} />
+            <TopBar title={"Settings"} back={false} />
             <ScrollView >
                 <ListItem
                     bottomDivider

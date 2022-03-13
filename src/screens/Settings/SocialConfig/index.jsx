@@ -14,7 +14,6 @@ function SocialConfig(props) {
     useEffect(()=>{
         tokenAuth().then(session=>{
             setToken(session)
-            console.log(baseURL+"sync/saveSession/" + session + "/" + props.route.params.social)
         })
     }, [props.route.params.social])
 
@@ -30,11 +29,9 @@ function SocialConfig(props) {
                 startInLoadingState={true}
                 renderLoading={() => <ActivityIndicator />}
                 onMessage={event => {
-                    console.log(event.nativeEvent.data)
                     //JSON.parse(event.nativeEvent.data)!==undefined?props.navigation.navigate('Other', {screen: 'Settings/SocialNetworks', params:{from:"config"}}):null
 
                 }}
-                onError={(error)=>console.log(error.target)}
                 javaScriptEnabled
             />:null}
         </View>

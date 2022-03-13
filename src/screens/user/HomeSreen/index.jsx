@@ -1,6 +1,6 @@
 import React, {memo, useEffect, useState} from "react";
 import TopBar from "../../../components/TopBar";
-import {Appearance, Dimensions, FlatList, Text, View} from "react-native";
+import {Appearance, Dimensions, FlatList, LogBox, Text, View} from "react-native";
 import Publication, {EmptyComponent, emptyComponent} from "../../../components/ListPublication/List";
 import {styles} from "./style"
 import {useRecoilState} from "recoil";
@@ -23,6 +23,7 @@ function HomeScreen({navigation}){
 
 
     useEffect(()=>{
+        LogBox.ignoreLogs(['Did not retain recoil value on render']);
         tokenAuth().then(session=>{
             setToken(session)
             loadData("load")
@@ -106,4 +107,4 @@ function HomeScreen({navigation}){
 
 
 
-export default (HomeScreen)
+export default memo(HomeScreen)

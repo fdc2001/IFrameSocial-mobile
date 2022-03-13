@@ -56,6 +56,7 @@ api.interceptors.response.use(res=>{
             ]
         )
     }
+    return error
 })
 
 export function tokenAuth  (){

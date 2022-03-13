@@ -10,6 +10,8 @@ import {Appearance} from "react-native";
 import { StatusBar } from 'expo-status-bar';
 
 import Routes from "./src/routes";
+import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
+import nativeTheme from "./src/core/nativeTheme";
 
 export default function Base(){
 
@@ -23,12 +25,13 @@ export default function Base(){
     }, [])
 
     return(
-
+        <NativeBaseProvider theme={nativeTheme}>
             <PaperProvider theme={theme}>
-                {Appearance.getColorScheme()==="dark"?<StatusBar style="light"  />:<StatusBar style="dark"  />}
-                <NavigationContainer>
-                    {isAuth?<BaseApp/>:<Routes/>}
-                </NavigationContainer>
-            </PaperProvider>
+                    {Appearance.getColorScheme()==="dark"?<StatusBar style="light"  />:<StatusBar style="dark"  />}
+                    <NavigationContainer>
+                        {isAuth?<BaseApp/>:<Routes/>}
+                    </NavigationContainer>
+                </PaperProvider>
+        </NativeBaseProvider>
     )
 }

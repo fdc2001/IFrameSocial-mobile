@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useState} from "react";
-import {FlatList, Modal, RefreshControl, ScrollView, Text, View, SafeAreaView, Dimensions} from "react-native";
+import {FlatList, Modal, RefreshControl, ScrollView, Text, View, SafeAreaView, Dimensions, LogBox} from "react-native";
 import {styles} from "./style";
 import TopBar from "../../../components/TopBar";
 import api, {baseURL, tokenAuth} from "../../../core/api";
@@ -11,7 +11,7 @@ import ListPublication from "../../../components/ListPublication/Gallery";
 import { Backpack } from 'react-kawaii/lib/native/'
 import HorizontalFeed from "../../../components/Pets/HorizontalFeed";
 import {EmptyComponent} from "../../../components/ListPublication/List";
-import Final from "../../../components/Pets/Final";
+import PetsListFinal from "../../../components/Pets/Final";
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
 function Me(props){
@@ -26,6 +26,7 @@ function Me(props){
     }, []);
 
     useEffect(()=>{
+        LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
         tokenAuth().then(session=> {
             setToken(session)
 
@@ -33,7 +34,7 @@ function Me(props){
                 api.get('account/profile').then(res => {
                     setUserData(res.data.data)
                     setRefresh(false)
-                }).catch(console.log)
+                })
                 getPublications()
 
             }
@@ -45,12 +46,12 @@ function Me(props){
         if(type==="load"){
             api.get('publication?page=1').then(res=>{
                 setPublications(res.data.data)
-            }).catch(console.log)
+            })
         }else{
             if(allData.next_page_url!==null){
                 api.get('publication?page='+(parseInt(allData.current_page)+1)).then(res=>{
                     setPublications(prevState => prevState.concat(res.data.data))
-                }).catch(console.log)
+                })
             }
         }
     }
@@ -103,20 +104,20 @@ function Me(props){
                         <View style={{...styles.row, justifyContent:'center'}}>
                             <Title>Pets</Title>
                         </View>
-                        <View style={styles.divider}/>
+                            <View style={styles.divider}/>
                         <FlatList
                             data={userData.pets}
                             renderItem={({item})=>(
                                 <HorizontalFeed
+                                    navigation={props.navigation}
                                     data={item}
                                     token={token}
                                 />
                             )}
                             horizontal={true}
                             keyExtractor={item => item.id}
-                            onEndReached={()=>getPublications("load")}
                             onEndReachedThreshold={0.5}
-                            ListFooterComponent={<Final/>}
+                            ListFooterComponent={<PetsListFinal navigation={props.navigation}/>}
                         />
                     </View>
                     <View style={styles.divider}/>
